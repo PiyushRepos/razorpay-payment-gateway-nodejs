@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
-import razorpay from '../config/razorpay.config.js';
+import razorpay from './config/razorpay.config.js';
 import cors from 'cors';
 import path from 'path';
 import crypto from 'node:crypto';

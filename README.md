@@ -6,12 +6,30 @@ This repository is a minimal demo showing how to integrate Razorpay's payment ga
 
 The server exposes endpoints to create orders, return the public key, and verify payments using the Razorpay Node SDK.
 
+## Folder Structure
+
+```
+├── .env
+├── .env.example
+├── package.json
+├── pnpm-lock.yaml
+├── README.md
+└── src/
+  ├── index.js
+  ├── index.html
+  ├── payment-success.html
+  ├── payment-failure.html
+  └── config/
+    └── razorpay.config.js
+```
+
 Files of interest:
 
-- `index.js` — Express server (node, ES modules).
-- `index.html` — Static client page which uses Razorpay Checkout.
-- `config/razorpay.config.js` — Razorpay SDK initialization.
-- `payment-success.html`, `payment-failure.html` — static pages shown after verification.
+- `src/index.js` — Express server (node, ES modules).
+- `src/index.html` — Static client page which uses Razorpay Checkout.
+- `src/config/razorpay.config.js` — Razorpay SDK initialization.
+- `src/payment-success.html`, `src/payment-failure.html` — static pages shown after verification.
+- `.env`, `.env.example` — environment variable files in the root.
 - `package.json` — scripts and dependencies (uses `pnpm` by default if you use the repo's package manager).
 
 ## Features
