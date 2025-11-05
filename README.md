@@ -157,7 +157,7 @@ Important: The `RAZORPAY_KEY_SECRET` must never be exposed to the client — ver
 
 ## Configuration (Razorpay SDK)
 
-`config/razorpay.config.js` initializes the Razorpay instance with env variables:
+`src/config/razorpay.config.js` initializes the Razorpay instance with env variables:
 
 ```js
 import Razorpay from 'razorpay';
