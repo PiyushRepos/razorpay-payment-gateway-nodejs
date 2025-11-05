@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
-import razorpay from './config/razorpay.config.js';
+import razorpay from '../config/razorpay.config.js';
 import cors from 'cors';
 import path from 'path';
 import crypto from 'node:crypto';
@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Home route
 app.get('/', (req, res) => {
-  res.status(200).sendFile(path.join(process.cwd(), 'index.html'));
+  res.status(200).sendFile(path.join(process.cwd(), 'src/index.html'));
 });
 
 // Create order route
@@ -57,7 +57,7 @@ app.post('/payment-verification', (req, res) => {
   if (!razorpay_payment_id || !razorpay_order_id || !razorpay_signature) {
     return res
       .status(400)
-      .sendFile(path.join(process.cwd(), 'payment-failure.html'));
+      .sendFile(path.join(process.cwd(), 'src/payment-failure.html'));
   }
 
   const body = razorpay_order_id + '|' + razorpay_payment_id;
@@ -75,12 +75,12 @@ app.post('/payment-verification', (req, res) => {
   if (expectedSignature === razorpay_signature) {
     return res
       .status(200)
-      .sendFile(path.join(process.cwd(), 'payment-success.html'));
+      .sendFile(path.join(process.cwd(), 'src/payment-success.html'));
   }
 
   return res
     .status(400)
-    .sendFile(path.join(process.cwd(), 'payment-failure.html'));
+    .sendFile(path.join(process.cwd(), 'src/payment-failure.html'));
 });
 
 // Start the server
