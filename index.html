@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Razorpay payment gateway</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
+  </head>
+  <body>
+    <h1>Razorpay Payment Gateway Integration</h1>
+    <form id="payment-form">
+      <label for="amount">Amount (in INR): </label>
+      <input type="number" id="amount" name="amount" required />
+      <button type="submit">Pay Now</button>
+    </form>
+
+    <script>
+      const form = document.getElementById('payment-form');
+
+      const handlePayment = async (event) => {
+        event.preventDefault();
+
+        const { amount } = Object.fromEntries(
+          new FormData(event.currentTarget).entries()
+        );
+
+        try {
+          let [keyResponse, orderResponse] = await Promise.all([
+            fetch('/get-razorpay-key'),
+
+            fetch('/create-order', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ amount: Number(amount) }),
+            }),
+          ]);
+
+          if (!orderResponse.ok || !keyResponse.ok) {
+            throw new Error('Failed to create order');
+          }
+
+          const { key } = await keyResponse.json();
+
+          const { order } = await orderResponse.json();
+          console.log({ order, key });
+
+          const options = {
+            key,
+            amount: order.amount,
+            currency: order.currency,
+            name: 'Test Company',
+            description: 'Test Transaction',
+            order_id: order.id,
+            callback_url: '/payment-verification', // Your success URL
+          };
+
+          const rzp = new Razorpay(options);
+          rzp.open();
+        } catch (error) {
+          console.error('Error creating order:', error);
+          return;
+        }
+      };
+
+      form.addEventListener('submit', handlePayment);
+    </script>
+  </body>
+</html>
