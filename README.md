@@ -1,6 +1,4 @@
-### /create-order
-
-## Razorpay Integration Demo
+# Razorpay Integration Demo
 
 This repository is a minimal demo showing how to integrate Razorpay's payment gateway with a small Express server and a static client page.
 
